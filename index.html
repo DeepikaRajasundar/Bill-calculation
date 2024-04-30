@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juices and Drinks Bill Calculator</title>
+<style>
+    body {
+        text-align: center;
+        background-color: red; 
+    }
+
+    #calculator {
+        width: 300px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        background-color: white;
+        padding: 20px;
+    }
+
+    label {
+        display: inline-block;
+        width: 160px; /* Set a fixed width for labels */
+        text-align: left;
+    }
+
+    input[type="number"] {
+        width: 50px;
+        padding: 5px;
+        margin-left: 5px; /* Adjust the margin */
+    }
+
+    input[type="button"] {
+        background-color: green;
+        color: white;
+        font-size: 16px;
+        margin-top: 10px;
+        width: calc(50% - 5px); /* Adjust button width */
+    }
+
+    #addItemBtn {
+        display: none; /* Initially hidden */
+    }
+
+    textarea {
+        width: calc(100% - 12px);
+        height: 100px;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+    <div id="calculator">
+        <h2>ABC JUICE AND DRINKS SHOP</h2>
+        <label for="appleJuice">Apple Juice (Rs.40):</label>
+        <input type="number" id="appleJuice" value="0">
+        <br>
+        <label for="orangeJuice">Orange Juice (Rs.30):</label>
+        <input type="number" id="orangeJuice" value="0">
+        <br>
+        <label for="papaya">Papaya (Rs.35):</label>
+        <input type="number" id="papaya" value="0">
+        <br>
+        <label for="lemon">Lemon (Rs.15):</label>
+        <input type="number" id="lemon" value="0">
+        <br>
+        <label for="watermelonJuice">Watermelon Juice (Rs.50):</label>
+        <input type="number" id="watermelonJuice" value="0">
+        <br>
+        <label for="pineappleJuice">Pineapple Juice (Rs.45):</label>
+        <input type="number" id="pineappleJuice" value="0">
+        <br>
+        <label for="mangoJuice">Mango Juice (Rs.35):</label>
+        <input type="number" id="mangoJuice" value="0">
+        <br>
+        <label for="grapeJuice">Grape Juice (Rs.40):</label>
+        <input type="number" id="grapeJuice" value="0">
+        <br>
+        <label for="coffee">Coffee (Rs.20):</label>
+        <input type="number" id="coffee" value="0">
+        <br>
+        <label for="tea">Tea (Rs.15):</label>
+        <input type="number" id="tea" value="0">
+        <br>
+        <label for="coldCoffee">Cold Coffee (Rs.25):</label>
+        <input type="number" id="coldCoffee" value="0">
+        <br>
+         
+        <input type="button" value="Calculate" onclick="calculateBill()">
+        <input type="button" value="Reset" onclick="resetValues()">
+        <input type="button" id="addItemBtn" value="Add Item" onclick="showAddItemForm()">
+        <p id="total"></p>
+        <textarea id="itemList" readonly></textarea> <!-- Added text area -->
+    </div>
+
+    <script>
+        function calculateBill() {
+            var prices = {
+                appleJuice: 40,
+                orangeJuice: 30,
+                papaya: 35,
+                lemon: 15,
+                watermelonJuice: 50,
+                pineappleJuice: 45,
+                mangoJuice: 35,
+                grapeJuice: 40,
+                coffee: 20,
+                tea: 15,
+                coldCoffee: 25
+            };
+
+            var total = 0;
+            var itemsList = "";
+
+            for (var item in prices) {
+                var quantity = parseInt(document.getElementById(item).value);
+                total += prices[item] * (isNaN(quantity) ? 0 : quantity);
+                if (quantity > 0) {
+                    itemsList += item.replace(/([A-Z])/g, ' $1').toLowerCase() + ": " + quantity + "\n";
+                }
+            }
+            document.getElementById("total").textContent = "Total bill amount: Rs." + total.toFixed(2);
+            document.getElementById("addItemBtn").style.display = "inline"; // Show the "Add Item" button
+            document.getElementById("itemList").value = itemsList.trim(); // Set the items list in the text area
+        }
+
+        function resetValues() {
+            var inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(function(input) {
+                input.value = 0;
+            });
+            document.getElementById("total").textContent = "";
+            document.getElementById("addItemBtn").style.display = "none"; // Hide the "Add Item" button when resetting
+            document.getElementById("itemList").value = ""; // Clear the text area
+        }
+    </script>
+</body>
+</html>
